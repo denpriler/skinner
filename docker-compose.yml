@@ -2,7 +2,7 @@ services:
     app:
         container_name: 'skinner-app'
         build:
-            context: './vendor/laravel/sail/runtimes/8.4'
+            context: './docker/8.4'
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -39,7 +39,7 @@ services:
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
         volumes:
             - 'skinner-pgsql:/var/lib/postgresql/data'
-            - './vendor/laravel/sail/database/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
+            - './docker/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
         networks:
             - skinner-network
         healthcheck:
