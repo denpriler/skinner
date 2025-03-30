@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Enums\Provider;
+use App\Services\AppScanner\AppScannerBuilder;
+use App\Services\AppScanner\IAppScanner;
 use App\Services\AppService;
-use App\Services\Scanner\AppScannerBuilder;
-use App\Services\Scanner\IAppScanner;
+use App\Services\ItemScanner\IItemScanner;
+use App\Services\ItemScanner\ItemScannerBuilder;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Context;
 use Illuminate\Support\ServiceProvider;
 
 class ProviderServiceProvider extends ServiceProvider
@@ -30,15 +32,18 @@ class ProviderServiceProvider extends ServiceProvider
 
     private function registerSteamProvider(): void
     {
-        $this->app->singleton(AppScannerBuilder::class, function () {
-            /** @var Provider $provider */
-            $provider = Route::getCurrentRoute()?->parameter('provider') ?? Provider::STEAM;
-
-            return new AppScannerBuilder($provider);
-        });
+        $this->app->bind(Provider::class, fn () => Context::get(Provider::class, Provider::STEAM));
+        // App
+        $this->app->singleton(AppScannerBuilder::class);
         $this->app->singleton(IAppScanner::class, function (Application $application) {
             return $application->get(AppScannerBuilder::class)->build();
         });
+        // Item
+        $this->app->singleton(ItemScannerBuilder::class);
+        $this->app->singleton(IItemScanner::class, function (Application $application) {
+            return $application->get(ItemScannerBuilder::class)->build();
+        });
+        //
         $this->app->singleton(AppService::class);
     }
 }

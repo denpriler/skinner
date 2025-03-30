@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Scanner;
+namespace App\Services\AppScanner;
 
 use App\Attributes\AppArray;
 use App\Data\AppData;
@@ -9,6 +9,7 @@ use App\Enums\Provider;
 use App\Exceptions\App\AppScanException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 final readonly class SteamAppScanner implements IAppScanner
 {
@@ -26,9 +27,9 @@ final readonly class SteamAppScanner implements IAppScanner
     /**
      * @throws AppScanException
      */
-    public function getApp(AppSlug $slug): AppData
+    public function scan(AppSlug $appSlug): AppData
     {
-        $appId = Arr::get($this->apps, $slug->value);
+        $appId = Arr::get($this->apps, $appSlug->value);
 
         try {
             $response = Http::asJson()
@@ -44,13 +45,14 @@ final readonly class SteamAppScanner implements IAppScanner
 
             return AppData::from([
                 ...$data,
-                'slug' => $slug,
+                'slug' => $appSlug,
                 'description' => Arr::get($data, 'short_description'),
                 'steam_app_id' => Arr::get($data, 'steam_appid'),
                 'image_url' => sprintf('https://cdn.akamai.steamstatic.com/steam/apps/%s/header.jpg', Arr::get($data, 'steam_appid')),
             ]);
         } catch (\Throwable $exception) {
-            throw new AppScanException(Provider::STEAM, $slug, $exception->getMessage());
+            Log::error($exception);
+            throw new AppScanException(Provider::STEAM, $appSlug, $exception->getMessage());
         }
     }
 }

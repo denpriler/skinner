@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Scanner;
+namespace App\Services\AppScanner;
 
 use App\Data\AppData;
 use App\Enums\AppSlug;
@@ -9,5 +9,5 @@ use App\Exceptions\App\AppScanException;
 interface IAppScanner
 {
     /** @throws AppScanException */
-    public function getApp(AppSlug $slug): AppData;
+    public function scan(AppSlug $appSlug): AppData;
 }

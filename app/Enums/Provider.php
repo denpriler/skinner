@@ -9,4 +9,9 @@ enum Provider: string
     use HasStringArray;
 
     case STEAM = 'steam';
+
+    public static function getDefaultProvider(): self
+    {
+        return self::STEAM;
+    }
 }

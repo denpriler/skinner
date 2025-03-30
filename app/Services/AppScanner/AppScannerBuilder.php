@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Scanner;
+namespace App\Services\AppScanner;
 
 use App\Enums\Provider;
 use Illuminate\Contracts\Container\BindingResolutionException;

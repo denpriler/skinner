@@ -5,8 +5,8 @@ namespace App\Console\Commands;
 use App\Enums\AppSlug;
 use App\Enums\Provider;
 use App\Exceptions\App\AppScanException;
+use App\Services\AppScanner\AppScannerBuilder;
 use App\Services\AppService;
-use App\Services\Scanner\AppScannerBuilder;
 use Illuminate\Console\Command;
 
 class ScanApps extends Command
@@ -43,7 +43,6 @@ class ScanApps extends Command
             return 1;
         }
 
-        $appService = null;
         try {
             /** @var AppService $appService */
             $appService = app(AppService::class, [
@@ -52,6 +51,8 @@ class ScanApps extends Command
         } catch (\Throwable $exception) {
             $this->error('Error building app scanner for provider');
             $this->error($exception->getMessage());
+
+            return 1;
         }
 
         foreach (AppSlug::cases() as $appSlug) {

@@ -5,8 +5,8 @@ namespace App\Console\Commands;
 use App\Enums\AppSlug;
 use App\Enums\Provider;
 use App\Exceptions\App\AppScanException;
+use App\Services\AppScanner\AppScannerBuilder;
 use App\Services\AppService;
-use App\Services\Scanner\AppScannerBuilder;
 use Illuminate\Console\Command;
 use Throwable;
 

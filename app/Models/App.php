@@ -18,7 +18,7 @@ class App extends Model
 
     public const string FIELD_IMAGE_URL = 'image_url';
 
-    public const string FIELD_STEAM_APP_ID = 'steam_app_id';
+    public const string FIELD_ENABLED = 'enabled';
 
     /**
      * The attributes that are mass assignable.
@@ -28,11 +28,11 @@ class App extends Model
         self::FIELD_NAME,
         self::FIELD_DESCRIPTION,
         self::FIELD_IMAGE_URL,
-        self::FIELD_STEAM_APP_ID,
+        self::FIELD_ENABLED,
     ];
 
     protected $casts = [
         self::FIELD_SLUG => AppSlug::class,
-        self::FIELD_STEAM_APP_ID => 'integer',
+        self::FIELD_ENABLED => 'boolean',
     ];
 }

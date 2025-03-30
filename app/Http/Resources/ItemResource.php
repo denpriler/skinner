@@ -2,13 +2,13 @@
 
 namespace App\Http\Resources;
 
-use App\Data\AppData;
+use App\Data\ItemData;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AppResource extends JsonResource
+class ItemResource extends JsonResource
 {
-    /** @var AppData */
+    /** @var ItemData */
     public $resource;
 
     /**
@@ -19,11 +19,12 @@ class AppResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->resource->id,
-            'slug' => $this->resource->slug,
+            'app' => $this->resource->appSlug,
             'name' => $this->resource->name,
-            'image_url' => $this->resource->imageUrl,
-            'enabled' => $this->resource->enabled,
+            'price' => $this->resource->lastUpdatedPrice,
+            'amount' => $this->resource->lastUpdatedAmount,
+            'icon_url' => $this->resource->iconUrl,
+            'page_url' => $this->resource->pageUrl,
         ];
     }
 }

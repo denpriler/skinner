@@ -128,7 +128,7 @@ return [
 
     'apps' => [
         Provider::STEAM->value => [
-            AppSlug::CS2->value => 730,
+            AppSlug::CS_2->value => 730,
             AppSlug::DOTA_2->value => 570,
         ],
     ],

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('image_url')->nullable();
 
-            $table->unsignedBigInteger('steam_app_id')->nullable();
+            $table->boolean('enabled')->default(true);
 
             $table->timestamps();
         });
