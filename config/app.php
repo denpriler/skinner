@@ -1,5 +1,8 @@
 <?php
 
+use App\Enums\AppSlug;
+use App\Enums\Provider;
+
 return [
 
     /*
@@ -123,4 +126,10 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'apps' => [
+        Provider::STEAM->value => [
+            AppSlug::CS2->value => 730,
+            AppSlug::DOTA_2->value => 570,
+        ],
+    ],
 ];
